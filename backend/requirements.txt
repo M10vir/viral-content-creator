@@ -4,13 +4,8 @@ uvicorn[standard]==0.29.0
 
 # AI Content Generation
 transformers==4.40.0
-torch==2.2.2  # M1 Mac Compatible via Metal acceleration
-accelerate==0.29.3  # Helps optimize inference on M1 chips
-
-# Trend Analysis
-twint==2.1.20  # For scraping Twitter trends (no API needed)
-beautifulsoup4==4.12.3  # For web scraping
-requests==2.31.0
+torch==2.2.2
+accelerate==0.29.3
 
 # Sentiment Analysis
 vaderSentiment==3.3.2
@@ -19,13 +14,13 @@ textblob==0.18.0.post0
 # Viral Post Generation
 langchain==0.1.14
 
-# Vector Database (Local)
+# Vector Database
 chromadb==0.4.22
 
 # Utilities
-python-dotenv==1.0.1  # For loading .env variables
-pydantic==2.7.1  # Data validation models
-loguru==0.7.2  # Advanced logging (simpler than default logger)
+python-dotenv==1.0.1
+pydantic==2.7.1
+loguru==0.7.2
 
-# Optional if you deploy with Docker
+# Optional for Docker deployments
 gunicorn==21.2.0

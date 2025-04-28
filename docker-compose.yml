@@ -1,0 +1,51 @@
+version: '3.9'
+
+services:
+  
+  backend:
+    build: ./backend
+    container_name: backend-service
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=development
+      - PORT=8000
+    volumes:
+      - ./backend:/app
+    command: >
+      bash -c "uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+    restart: always
+    platform: linux/amd64  # ✅ Force emulation on Mac M1 (important)
+
+  frontend:
+    build: ./frontend
+    container_name: frontend-service
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+    environment:
+      - PORT=3000
+    command: >
+      bash -c "npm install && npm run dev"
+    restart: always
+    platform: linux/amd64  # ✅ Force emulation on Mac M1
+    depends_on:
+      - backend
+
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n-service
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=false
+      - WEBHOOK_URL=http://localhost:5678
+      - GENERIC_TIMEZONE=Asia/Qatar
+    volumes:
+      - n8n_data:/home/node/.n8n
+    restart: always
+    platform: linux/amd64  # ✅ Force emulation on Mac M1
+
+volumes:
+  n8n_data:
