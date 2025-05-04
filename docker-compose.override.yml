@@ -1,0 +1,6 @@
+version: '3.9'
+
+services:
+  n8n-service:
+    environment:
+      - N8N_OAUTH2_LINKEDIN_SCOPE=r_liteprofile r_emailaddress w_member_social
