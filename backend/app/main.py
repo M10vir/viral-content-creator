@@ -3,7 +3,7 @@ sys.stdout.reconfigure(line_buffering=True)
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.api import routes_content, routes_trends, routes_sentiment, routes_auto_prompt
+from app.api import routes_content, routes_trends, routes_sentiment, routes_auto_prompt, routes_trending_insight
 from app.api.routes_health import router as health_router 
 from dotenv import load_dotenv
 load_dotenv()
@@ -25,3 +25,4 @@ app.include_router(routes_trends.router, prefix="/trends", tags=["Trends"])
 app.include_router(routes_sentiment.router, prefix="/sentiment", tags=["Sentiment"])
 app.include_router(health_router, tags=["Health"])
 app.include_router(routes_auto_prompt.router)
+app.include_router(routes_trending_insight.router)
