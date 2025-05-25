@@ -1,5 +1,4 @@
-# backend/app/services/trending_insight_generator.py
-
+import json
 import os
 from openai import OpenAI
 
@@ -7,19 +6,26 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def generate_trending_ai_insight():
     prompt = """
-You are an AI-powered content strategist. Create a research-driven, high-engagement LinkedIn-style viral AI insight post tailored for professionals in Qatar.
+You are an AI-powered content strategist. Create a research-driven, high-engagement LinkedIn-style viral AI trending content insight post tailored for professionals in globaly as well as in Qatar.
 
 Requirements:
-1. 📍 Focus on 2024–2025 AI breakthroughs and authoritative news from:
-   - OpenAI (GPT-4o, Sora)
-   - Microsoft Azure AI (Copilot, Responsible AI)
-   - Google I/O 2024 (Gemini, Imagen)
-   - AWS AI (Bedrock, Titan)
-   - RSAC 2024 (AI security insights)
+1. 📍 Focus on current affairs and latest AI breakthroughs and authoritative news from:
+   - Artificial Intelligence 
+   - IBM
+   - Oracle
+   - Apple
+   - Grok
+   - Mistral 
+   - OpenAI
+   - DeepSeek 
+   - Microsoft Azure AI 
+   - Google AI
+   - AWS AI 
+   - RSAC (AI security insights)
    - Qatar Foundation, QCRI, QSTP, MCIT AI Partnerships
    - Arabic Language Processing, AI in healthcare, transport, smart city
 
-2. 🔍 Mention and hyperlink at least 3 authoritative sources
+2. 🔍 Mention and hyperlink of authoritative sources
 
 3. 🇶🇦 Highlight Qatar-based AI developments and initiatives
 
@@ -44,6 +50,13 @@ Format your response as:
             temperature=0.7,
             max_tokens=1100
         )
-        return response.choices[0].message.content
+
+        content_str = response.choices[0].message.content.strip()
+
+        # ✅ Parse the JSON returned by GPT
+        insight = json.loads(content_str)
+        return insight  # This will now be a proper dict
+    except json.JSONDecodeError as e:
+        raise RuntimeError(f"❌ GPT response is not valid JSON: {content_str}")
     except Exception as e:
-        raise RuntimeError(f"Error generating AI insight with sources: {str(e)}")
+        raise RuntimeError(f"❌ Error generating AI insight with sources: {str(e)}")
