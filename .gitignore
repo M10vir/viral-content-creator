@@ -6,6 +6,10 @@ __pycache__/
 *.pyd
 *.old
 
+# n8n runtime files
+n8n_data/*.log
+n8n_data/database.sqlite
+
 # Node
 node_modules/
 
